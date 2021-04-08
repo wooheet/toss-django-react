@@ -14,8 +14,9 @@ urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
     path("users/", include("toss.users.urls", namespace="users")),
+    path("images/", include('toss.images.urls')),
     path("accounts/", include("allauth.urls")),
-    # Your stuff: custom urls includes go here
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
