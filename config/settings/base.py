@@ -40,7 +40,7 @@ LOCALE_PATHS = [str(ROOT_DIR / "locale")]
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-DATABASES = {"default": env.db("DATABASE_URL")}
+DATABASES = {"default": env.db("DATABASE_URL", default='postgres:///teddytoss')}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # URLS
@@ -64,7 +64,6 @@ DJANGO_APPS = [
     "django.forms",
 ]
 THIRD_PARTY_APPS = [
-    "crispy_forms",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
@@ -72,7 +71,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "toss.users.apps.UsersConfig",
-    # Your stuff: custom apps go here
+    "toss.images.apps.ImagesConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -221,7 +220,7 @@ EMAIL_TIMEOUT = 5
 # Django Admin URL.
 ADMIN_URL = "admin/"
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
-ADMINS = [("""Teddy""", "teddy@example.com")]
+ADMINS = [("""Teddy""", "teddy@toss.io")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
 
@@ -267,3 +266,4 @@ SOCIALACCOUNT_ADAPTER = "toss.users.adapters.SocialAccountAdapter"
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+
