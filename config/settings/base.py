@@ -68,12 +68,17 @@ THIRD_PARTY_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "rest_framework",
-    "taggit",
+    'rest_framework.authtoken',
+    'taggit',  # Tags for the photos
+    'taggit_serializer',  # tag serializer
+    'rest_auth',  # rest auth
+    'rest_auth.registration',  # enable registration
 ]
 
 LOCAL_APPS = [
     "toss.users.apps.UsersConfig",
     "toss.images.apps.ImagesConfig",
+    'toss.notifications.apps.NotificationsConfig'
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -92,10 +97,6 @@ AUTHENTICATION_BACKENDS = [
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 AUTH_USER_MODEL = "users.User"
-# https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
-LOGIN_REDIRECT_URL = "users:redirect"
-# https://docs.djangoproject.com/en/dev/ref/settings/#login-url
-LOGIN_URL = "account_login"
 
 # PASSWORDS
 # ------------------------------------------------------------------------------
@@ -269,3 +270,15 @@ SOCIALACCOUNT_ADAPTER = "toss.users.adapters.SocialAccountAdapter"
 # ------------------------------------------------------------------------------
 
 TAGGIT_CASE_INSENSITIVE = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+}
+
+REST_USE_JWT = True
+ACCOUNT_LOGOUT_ON_GET = True
