@@ -3,6 +3,14 @@ from . import models
 from toss.images import serializers as images_serializers
 
 
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.User
+        fields = '__all__'
+        extra_kwargs = {'password': {'write_only': True, 'required': True}}
+
+
 class UserProfileSerializer(serializers.ModelSerializer):
 
     images = images_serializers.CountImageSerializer(many=True, read_only=True)
@@ -35,3 +43,10 @@ class ListUserSerializer(serializers.ModelSerializer):
             'username',
             'name'
         )
+
+
+class MyProfileSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.User
+        fields = '__all__'

@@ -266,15 +266,23 @@ SOCIALACCOUNT_ADAPTER = "toss.users.adapters.SocialAccountAdapter"
 
 TAGGIT_CASE_INSENSITIVE = True
 
+REST_DEFAULT_AUTHENTICATION_CLASSES = (
+    'config.authentication.CustomJwtTokenAuthentication',
+)
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-    ),
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    # ),
+    'DEFAULT_AUTHENTICATION_CLASSES': REST_DEFAULT_AUTHENTICATION_CLASSES,
 }
 
 REST_USE_JWT = True
 ACCOUNT_LOGOUT_ON_GET = True
 SOCIALACCOUNT_QUERY_EMAIL = True
+
+ACTION_LOGGER_NAME = 'action'
+

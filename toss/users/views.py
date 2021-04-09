@@ -1,10 +1,120 @@
+import copy
+import logging
+from rest_framework import viewsets, mixins
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from . import models, serializers
 from toss.notifications import views as notification_views
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
+from config.mixins import CustomResponseMixin, CustomPaginatorMixin
+from config.log import LOG
+from .models import User
+from .serializers import MyProfileSerializer
+from config.managers import TokenManager
+
+logger = logging.getLogger(__name__)
+
+
+class UserViewSet(viewsets.ModelViewSet,
+                  CustomResponseMixin,
+                  CustomPaginatorMixin):
+    queryset = models.User.objects.all()
+    serializer_class = serializers.UserSerializer
+    permission_classes = (AllowAny,)
+
+    def create(self, request, *args, **kwargs):
+        """
+             사용자 가입 SignUp API
+         ---
+         responseMessages:
+             -   code:   200
+                 message: SUCCESS
+             -   code:   400
+                 message: BADREQUEST
+             -   code:   403
+                 message: FORBIDDEN. (제재, 차단 사용자)
+             -   code:   409
+                 message: CONFLICT. (이미 가입된 사용자가 존재함)
+             -   code:   500
+                 message: SERVER ERROR
+         """
+
+        try:
+            data_copy = copy.deepcopy(request.data)
+            LOG(request=request, event='USER_NEW_SIGN',
+                data=dict(extra=data_copy))
+
+            signup_user, token = User.signup(data_copy)
+
+            data = {
+                'user_id': signup_user.id,
+                'token': token
+            }
+
+        except Exception as e:
+            logger.error(e, exc_info=True)
+            return self.server_exception()
+
+        return self.success(results=data)
+
+    @action(detail=False, methods=['get'])
+    def me(self, request, *args, **kwargs):
+        """
+            본인 Profile 조회 API
+        ---
+        response_serializer: users.serializers.MyProfileSerializer
+        parameters:
+            -   name: pk
+                description : Profile 정보를 조회 할 User ID
+                paramType: path
+        responseMessages:
+            -   code:   200
+                message: SUCCESS
+            -   code:   404
+                message: NOT FOUND
+            -   code:   500
+                message: SERVER ERROR
+        """
+
+        if not request.user.is_authenticated:
+            return self.un_authorized()
+
+        serializer = MyProfileSerializer(
+            request.user, context=dict(request=request)
+        )
+
+        return self.success(results=serializer.data)
+
+
+class TokenViewSet(APIView, CustomResponseMixin):
+    permission_classes = (AllowAny,)
+    serializer_class = MyProfileSerializer
+
+    def post(self, request, *args, **kwargs):
+        data = dict()
+
+        try:
+            user_id = request.user.id
+            device_unique_id = request.data.get('device_unique_id',
+                                                'device_unique_id')
+
+            token_manager = TokenManager()
+
+            token = token_manager.create_jwt(user_id, device_unique_id)
+            refresh_token = token_manager.create_refresh_token()
+
+            data = {
+                'token': token,
+                'refresh_token': refresh_token
+            }
+        except Exception as e:
+            logger.error(e)
+
+        return self.success(results=data)
 
 
 class ExploreUsers(APIView):
@@ -12,7 +122,6 @@ class ExploreUsers(APIView):
     def get(self, request, format=None):
 
         last_five = models.User.objects.all().order_by('-date_joined')[:5]
-
         serializer = serializers.ListUserSerializer(last_five, many=True)
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
@@ -30,7 +139,6 @@ class FollowUser(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         user.following.add(user_to_follow)
-
         user.save()
 
         notification_views.create_notification(user, user_to_follow, 'follow')
