@@ -1,5 +1,5 @@
 import pytest
-
+from django.urls import reverse
 from rest_framework.test import APIClient, APITestCase
 from toss.users.models import User
 from toss.users.tests.factories import UserFactory
@@ -33,15 +33,23 @@ class AuthAPITestCase(APITestCase):
         payload = jwt_payload_handler(user_factory)
         token = jwt_encode_handler(payload)
 
+        signup_data = dict(username=user_factory.username,
+                           password=user_factory.password)
+
+        res = client.post(reverse("user-list"), signup_data, format="json")
+        client_data = res.data.get("results")[0]
+
+        self.user_id = client_data.get("id")
+
         client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(token))
 
-        return client
+        return client_data, client
 
     def setUp(self, **kwargs):
         super().setUp()
         self.signup_user(**kwargs)
-        # self.user, self.client = self.signup_user(**kwargs)
-        # self.no_signup_client = APIClient()
+        self.user, self.client = self.signup_user(**kwargs)
+        self.no_signup_client = APIClient()
 
     def many_signup(self, count):
         signup_list = list(
@@ -61,3 +69,4 @@ class AuthAPITestCase(APITestCase):
 
     def get_user_object(self):
         return User.objects.get(id=self.user_id)
+

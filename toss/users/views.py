@@ -11,9 +11,9 @@ from toss.notifications import views as notification_views
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
 from config.mixins import CustomResponseMixin, CustomPaginatorMixin
+from .serializers import MyProfileSerializer, UserSerializer
 from config.log import LOG
 from .models import User
-from .serializers import MyProfileSerializer
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +22,7 @@ class UserViewSet(viewsets.ModelViewSet,
                   CustomResponseMixin,
                   CustomPaginatorMixin):
     queryset = models.User.objects.all()
-    serializer_class = serializers.MyProfileSerializer
+    serializer_class = serializers.UserSerializer
     permission_classes = (AllowAny,)
 
     def create(self, request, *args, **kwargs):
@@ -44,15 +44,13 @@ class UserViewSet(viewsets.ModelViewSet,
 
         try:
             data_copy = copy.deepcopy(request.data)
+
             LOG(request=request, event='USER_NEW_SIGN',
                 data=dict(extra=data_copy))
 
-            signup_user, token = User.signup(data_copy)
+            signup_user = User.signup(data_copy)
 
-            data = {
-                'user_id': signup_user.id,
-                'token': token
-            }
+            data = UserSerializer(signup_user).data
 
         except Exception as e:
             logger.error(e, exc_info=True)

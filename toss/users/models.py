@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
-from django.db import models
-from django.urls import reverse
+from django.db import models, transaction, IntegrityError
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 
@@ -36,3 +36,20 @@ class User(AbstractUser):
     @property
     def following_count(self):
         return self.following.all().count()
+
+    @classmethod
+    def signup(cls, params):
+        email = params.get('email', '')
+        username = params.get('username', '')
+
+        try:
+            with transaction.atomic():
+                signup_user = cls.objects.create(
+                    username=username, email=email
+                )
+        except ValidationError:
+            raise ValidationError('User data is invalid.')
+        except IntegrityError:
+            signup_user = cls.objects.get(username=username)
+
+        return signup_user
