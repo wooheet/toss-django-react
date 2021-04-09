@@ -1,7 +1,5 @@
 import pytest
 
-from django.urls import reverse
-from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
 from toss.users.models import User
 from toss.users.tests.factories import UserFactory
