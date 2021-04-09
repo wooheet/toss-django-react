@@ -3,7 +3,6 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from django.views import defaults as default_views
-from django.views.generic import TemplateView
 from rest_framework_jwt.views import obtain_jwt_token
 
 
@@ -15,7 +14,7 @@ urlpatterns = [
     path(r"notifications/", include('toss.notifications.urls')),
     path(r"rest-auth/", include('rest_auth.urls')),
     path(r"rest-auth/registration/", include('rest_auth.registration.urls')),
-    path("accounts/", include("allauth.urls")),
+    path(r"accounts/", include("allauth.urls")),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

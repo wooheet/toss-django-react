@@ -71,7 +71,7 @@ THIRD_PARTY_APPS = [
     'rest_framework.authtoken',
     'taggit',  # Tags for the photos
     'taggit_serializer',  # tag serializer
-    'rest_auth',  # rest auth
+    'rest_auth',  # rest auth, ref: https://django-rest-auth.readthedocs.io/en/latest/
     'rest_auth.registration',  # enable registration
 ]
 

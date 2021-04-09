@@ -12,23 +12,17 @@ class Images(APIView):
     def get(self, request, format=None):
 
         user = request.user
-
         following_users = user.following.all()
-
         image_list = []
 
         for following_user in following_users:
-
             user_images = following_user.images.all()[:2]
-
             for image in user_images:
-
                 image_list.append(image)
 
         my_images = user.images.all()[:2]
 
         for image in my_images:
-
             image_list.append(image)
 
         sorted_list = sorted(
@@ -41,13 +35,10 @@ class Images(APIView):
     def post(self, request, format=None):
 
         user = request.user
-
         serializer = serializers.InputImageSerializer(data=request.data)
 
         if serializer.is_valid():
-
             serializer.save(creator=user)
-
             return Response(data=serializer.data, status=status.HTTP_201_CREATED)
 
         else:
@@ -59,11 +50,8 @@ class LikeImage(APIView):
     def get(self, request, image_id, format=None):
 
         likes = models.Like.objects.filter(image__id=image_id)
-
         like_creators_ids = likes.values('creator_id')
-
         users = user_models.User.objects.filter(id__in=like_creators_ids)
-
         serializer = user_serializers.ListUserSerializer(users, many=True)
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
@@ -209,8 +197,6 @@ class ImageDetail(APIView):
 
     def get(self, request, image_id, format=None):
 
-        user = request.user
-
         try:
             image = models.Image.objects.get(id=image_id)
         except models.Image.DoesNotExist:
@@ -223,34 +209,27 @@ class ImageDetail(APIView):
     def put(self, request, image_id, format=None):
 
         user = request.user
-
         image = self.find_own_image(image_id, user)
 
         if image is None:
-
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
         serializer = serializers.InputImageSerializer(
             image, data=request.data, partial=True)
 
         if serializer.is_valid():
-
             serializer.save(creator=user)
-
             return Response(data=serializer.data, status=status.HTTP_204_NO_CONTENT)
 
         else:
-
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, image_id, format=None):
 
         user = request.user
-
         image = self.find_own_image(image_id, user)
 
         if image is None:
-
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
         image.delete()
