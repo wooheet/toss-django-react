@@ -13,7 +13,10 @@ from toss.users.tests.factories import UserFactory
 from toss.users.views import (
     UserProfile
 )
+from toss.conftest import AuthAPITestCase
 
-pytestmark = pytest.mark.django_db
 
+class TestUserAuth(AuthAPITestCase):
 
+    def test_user_auth(self):
+        pass
