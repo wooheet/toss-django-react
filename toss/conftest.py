@@ -1,9 +1,14 @@
 import pytest
 
 from django.urls import reverse
+from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
 from toss.users.models import User
 from toss.users.tests.factories import UserFactory
+from rest_framework_jwt.settings import api_settings
+
+jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
 
 @pytest.fixture(autouse=True)
@@ -22,29 +27,17 @@ class AuthAPITestCase(APITestCase):
         super().__init__(*args, **kwargs)
 
     def signup_user(self, **kwargs):
-        username = kwargs.get("username", "name")
-        password = kwargs.get("password", "password")
-        email = kwargs.get("email", "teddy@toss.io")
-
         client = APIClient()
         client.credentials(HTTP_USER_AGENT="AuthServer")
 
-        signup_data = {
-            username: username,
-            password: password,
-            email: email
-        }
+        user_factory = UserFactory()
 
-        res = client.post(reverse("users-list"),
-                          signup_data, format="json")
+        payload = jwt_payload_handler(user_factory)
+        token = jwt_encode_handler(payload)
 
-        # client.credentials(HTTP_AUTHORIZATION="JWT %s" % self.jwt_token)
+        client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(token))
 
-        # client_data = res.data.get("results")[0]
-        #
-        # self.user_id = client_data.get("id")
-        #
-        # return client_data, client
+        return client
 
     def setUp(self, **kwargs):
         super().setUp()
