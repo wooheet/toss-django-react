@@ -1,14 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+import FacebookLogin from "react-facebook-login";
 import formStyles from "shared/formStyles.module.scss";
 
 const LoginForm = (props, context) => (
   <div className={formStyles.formComponent}>
-    <form
-      className={formStyles.form}
-      onSubmit={props.handleSubmit}
-      method="post"
-    >
+    <form className={formStyles.form} onSubmit={props.handleSubmit}>
       <input
         type="text"
         placeholder={context.t("Username")}
@@ -32,6 +29,15 @@ const LoginForm = (props, context) => (
       />
     </form>
     <span className={formStyles.divider}>{context.t("or")}</span>
+    <FacebookLogin
+      appId="1718196768212364"
+      autoLoad={false}
+      fields="name,email,picture"
+      callback={props.handleFacebookLogin}
+      cssClass={formStyles.facebookLink}
+      icon="fa-facebook-official"
+      textButton={context.t("Log in with Facebook")}
+    />
     <span className={formStyles.forgotLink}>
       {context.t("Forgot password?")}
     </span>
