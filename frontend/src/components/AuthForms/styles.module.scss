@@ -1,6 +1,6 @@
 @import "src/config/_variables";
 
-.form-component {
+.formComponent {
     margin-top: 5px;
     display: flex;
     flex-direction: column;
@@ -11,7 +11,7 @@
       input[type="submit"] {
         margin-top: 10px;
       }
-      .text-input {
+      .textInput {
         border: 1px solid #efefef;
         border-radius: 3px;
         background-color: $bg-color;
@@ -59,7 +59,7 @@
         opacity: 0.8;
       }
     }
-    .facebook-link {
+    .facebookLink {
       display: flex;
       align-items: center;
       color: #385185;
@@ -69,11 +69,11 @@
         margin-right: 5px;
       }
     }
-    .forgot-link {
+    .forgotLink {
       font-size: $small-font-size;
       color: $dark-blue;
     }
-    .signup-header {
+    .signupHeader {
       font-size: 17px;
       color: $dark-grey;
       font-weight: 600;
