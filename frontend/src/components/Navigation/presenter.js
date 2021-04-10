@@ -9,19 +9,23 @@ const Navigation = (props, context) => (
     <div className={styles.inner}>
       <div className={styles.column}>
         <Link to="/">
-          <img
-            src={require("images/logo.png")}
-            className={styles.logo}
-            alt={context.t("Logo")}
-          />
+          {/*<img*/}
+          {/*  src={require("images/logo.png")}*/}
+          {/*  className={styles.logo}*/}
+          {/*  alt={context.t("Logo")}*/}
+          {/*/>*/}
         </Link>
       </div>
       <div className={styles.column}>
-        <input
-          type="text"
-          placeholder={context.t("Search")}
-          className={styles.searchInput}
-        />
+        <form method="post" onSubmit={props.onSubmit}>
+          <input
+            type="text"
+            placeholder={context.t("Search")}
+            className={styles.searchInput}
+            value={props.value}
+            onChange={props.onInputChange}
+          />
+        </form>
       </div>
       <div className={styles.column}>
         <div className={styles.navIcon}>
@@ -41,6 +45,12 @@ const Navigation = (props, context) => (
     </div>
   </div>
 );
+
+Navigation.propTypes = {
+  onInputChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired
+};
 
 Navigation.contextTypes = {
   t: PropTypes.func.isRequired

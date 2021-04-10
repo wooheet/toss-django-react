@@ -1,12 +1,11 @@
-
 import { connect } from "react-redux";
 import Container from "./container";
-import { push } from "react-router-redux";
+import { actionCreators as photoActions } from "redux/modules/photos";
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    goToSearch: searchTerm => {
-      dispatch(push(`/search/${searchTerm}`));
+    submitComment: message => {
+      dispatch(photoActions.commentPhoto(ownProps.photoId, message));
     }
   };
 };
