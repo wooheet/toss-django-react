@@ -4,11 +4,10 @@ import { LoginForm, SignupForm } from 'components/AuthForms'
 
 const Auth = (props, context) => (
     <main className={styles.auth}>
-        <div className={styles.column}>
-            <img src={require("images/phone.png")} alt="Checkout our app. Is cool" />
-        </div>
+
         <div className={styles.column}>
             <div className={`${styles.whiteBox} ${styles.formBox}`}>
+                <img src="https://static.toss.im/tds/icon/svg/logo.svg" alt="logo" width={95}/>
                 {props.action === "login" && <LoginForm />}
                 {props.action === "signup" && <SignupForm />}
             </div>
@@ -29,13 +28,6 @@ const Auth = (props, context) => (
                         </span>
                     </p>
                 )}
-            </div>
-            <div className={styles.appBox}>
-                <span>Get the app</span>
-                <div className={styles.appStores}>
-                    <img src={require("images/ios.png")} alt="Donload it on Apple Appstore"/>
-                    <img src={require("images/android.png")} alt="Donload it on Apple Appstore"/>
-                </div>
             </div>
         </div>
     </main>
