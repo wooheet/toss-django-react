@@ -14,15 +14,15 @@ class Footer extends React.Component {
                     <nav className={styles.nav}>
                         <ul className={styles.list}>
                             <li className={styles.listItem}>{this.context.t("About Us")}</li>
-                            <li className={styles.listItem}>Support</li>
-                            <li className={styles.listItem}>Blog</li>
-                            <li className={styles.listItem}>Press</li>
-                            <li className={styles.listItem}>API</li>
-                            <li className={styles.listItem}>Jobs</li>
-                            <li className={styles.listItem}>Privacy</li>
-                            <li className={styles.listItem}>Terms</li>
-                            <li className={styles.listItem}>Directory</li>
-                            <li className={styles.listItem}>Language</li>
+                            <li className={styles.listItem}>{this.context.t("Support")}</li>
+                            <li className={styles.listItem}>{this.context.t("Blog")}</li>
+                            <li className={styles.listItem}>{this.context.t("Press")}</li>
+                            <li className={styles.listItem}>{this.context.t("API")}</li>
+                            <li className={styles.listItem}>{this.context.t("Jobs")}</li>
+                            <li className={styles.listItem}>{this.context.t("Privacy")}</li>
+                            <li className={styles.listItem}>{this.context.t("Terms")}</li>
+                            <li className={styles.listItem}>{this.context.t("Directory")}</li>
+                            <li className={styles.listItem}>{this.context.t("Language")}</li>
                         </ul>
                     </nav>
                 </div>
