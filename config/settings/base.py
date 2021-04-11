@@ -77,8 +77,6 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "toss.users.apps.UsersConfig",
-    "toss.images.apps.ImagesConfig",
-    'toss.notifications.apps.NotificationsConfig'
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
