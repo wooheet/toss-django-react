@@ -2,13 +2,11 @@ import React from 'react';
 import propTypes from "prop-types";
 import { Route, Switch } from "react-router-dom";
 import './styles.module.scss';
-import Footer from 'components/Footer';
 import Auth from "components/Auth";
 
 const App = props => [
   //Nav,
-  props.isLoggedIn ? <PrivateRoutes key={2} /> : <PublicRoutes key={2} />,
-  <Footer key={3} />
+  props.isLoggedIn ? <PrivateRoutes key={2} /> : <PublicRoutes key={2} />
 ];
 
 App.propTypes = {

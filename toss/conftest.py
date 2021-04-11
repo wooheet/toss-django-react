@@ -42,7 +42,9 @@ class AuthAPITestCase(APITestCase):
         self.user_id = client_data.get("id")
 
         client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(token))
-        # User.objects.get(pk=self.user_id)
+
+        sign_user = User.objects.get(pk=self.user_id)
+
         return client_data, client
 
     def setUp(self, **kwargs):

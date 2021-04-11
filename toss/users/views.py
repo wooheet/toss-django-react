@@ -4,7 +4,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from . import models, serializers
-from config.mixins import CustomResponseMixin, CustomPaginatorMixin
+from config.mixins import CustomResponseMixin
 from .serializers import MyProfileSerializer, UserSerializer
 from config.log import LOG
 from .models import User
@@ -13,8 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 class UserViewSet(viewsets.ModelViewSet,
-                  CustomResponseMixin,
-                  CustomPaginatorMixin):
+                  CustomResponseMixin):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer
     permission_classes = (AllowAny,)

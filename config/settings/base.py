@@ -59,20 +59,14 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.admin",
-    "django.forms",
 ]
 THIRD_PARTY_APPS = [
     "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    'allauth.socialaccount.providers.facebook',
     "rest_framework",
     'rest_framework.authtoken',
-    'taggit',  # Tags for the photos
-    'taggit_serializer',  # tag serializer
     'rest_auth',  # rest auth, ref: https://django-rest-auth.readthedocs.io/en/latest/
     'rest_auth.registration',  # enable registration
-    'corsheaders' # To accept requests from react
+    'corsheaders'  # To accept requests from react
 ]
 
 LOCAL_APPS = [
