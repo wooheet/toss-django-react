@@ -4,6 +4,7 @@ from rest_framework.test import APIClient, APITestCase
 from toss.users.models import User
 from toss.users.tests.factories import UserFactory
 from rest_framework_jwt.settings import api_settings
+from toss.contracts.models import Contract
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
@@ -42,6 +43,10 @@ class AuthAPITestCase(APITestCase):
         self.user_id = client_data.get("id")
 
         client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(token))
+
+        Contract.objects.create(
+            contractor=client_data
+        )
 
         return client_data, client
 
