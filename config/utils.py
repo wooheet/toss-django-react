@@ -1,3 +1,4 @@
+import re
 from time import sleep
 from enum import Enum
 
@@ -15,6 +16,14 @@ def send_email(email_to: str, html_body: str) -> bool:
     return True
 
 
+def email_verification(email):
+    match = re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', email)
+
+    if match == None:
+        print('Bad Syntax')
+        raise ValueError('Bad Syntax')
+
+
 class ChoiceEnum(Enum):
     @classmethod
     def choices(cls):
@@ -22,7 +31,7 @@ class ChoiceEnum(Enum):
 
     @classmethod
     def get_values(cls):
-        return[x.value for x in cls]
+        return [x.value for x in cls]
 
     @classmethod
     def get_keys(cls):

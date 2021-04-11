@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models, transaction, IntegrityError
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from config.utils import email_verification
 
 
 class User(AbstractUser):
@@ -15,7 +16,9 @@ class User(AbstractUser):
     @classmethod
     def signup(cls, params):
         email = params.get('email', '')
-        username = params.get('username', '')
+        username = params.get('username', email.split('@')[0])
+
+        # email_verification(email)
 
         try:
             with transaction.atomic():
