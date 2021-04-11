@@ -1,22 +1,55 @@
+import copy
 import logging
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 from django.core.exceptions import ObjectDoesNotExist
-
+from toss.users.models import User
 from config.log import LOG
 from .models import Contract
-from config.mixins import CustomResponseMixin, CustomPaginatorMixin
-from .serializers import ContractSerializer
+from config.mixins import CustomResponseMixin
+from .serializers import ContractSerializer, ContractCreateSerializer
+from django.utils import timezone
 
 logger = logging.getLogger(__name__)
 
 
 class ContractViewSet(viewsets.GenericViewSet,
-                      CustomResponseMixin,
-                      CustomPaginatorMixin):
+                      CustomResponseMixin):
     queryset = Contract.objects.all()
     serializer_class = ContractSerializer
     permission_classes = (AllowAny,)
+
+    def create(self, request, *args, **kwargs):
+        """
+            계약서 생
+         ---
+         responseMessages:
+             -   code:   200
+                 message: SUCCESS
+             -   code:   400
+                 message: BADREQUEST
+             -   code:   403
+                 message: FORBIDDEN.
+             -   code:   500
+                 message: SERVER ERROR
+         """
+
+        try:
+            data_copy = copy.deepcopy(request.data)
+
+            LOG(request=request, event='CREATE_CONTRACT',
+                data=dict(extra=data_copy))
+
+            user = User.signup(data_copy)
+            contract = Contract.create(user)
+
+            data = ContractCreateSerializer(contract).data
+
+        except Exception as e:
+            logger.error(e, exc_info=True)
+            return self.server_exception()
+
+        return self.success(results=data)
 
     def list(self, request):
         """

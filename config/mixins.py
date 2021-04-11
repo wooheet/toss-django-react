@@ -1,9 +1,7 @@
 import logging
 
 from rest_framework.response import Response
-from rest_framework.utils.urls import replace_query_param
 from rest_framework.utils.serializer_helpers import ReturnList
-from .pagenation import CustomCursorPagination
 
 logger = logging.getLogger(__name__)
 
@@ -97,65 +95,3 @@ class CustomResponseMixin(object):
             data["previous"] = previous or ""
 
         return Response(status=status_code, data=data)
-
-
-class CustomPaginatorMixin(object):
-
-    def get_page_response_with_args(self, request=None, queryset=None,
-                                    serializer=None, ordering='-created',
-                                    page_size=None, context=None, args=[]):
-        if context is None:
-            context = {}
-        paginator = CustomCursorPagination(request=request, ordering=ordering,
-                                           page_size=page_size)
-        page_queryset = paginator.paginate_queryset(request=request,
-                                                    queryset=queryset)
-        page_serializer = serializer(page_queryset, many=True, context=context)
-        return paginator.get_paginated_response(data=page_serializer.data,
-                                                args=args)
-
-    def get_page_response(self, request=None, queryset=None, serializer=None,
-                          ordering='-created', page_size=None, context=None):
-        if context is None:
-            context = {}
-        paginator = CustomCursorPagination(request=request, ordering=ordering,
-                                           page_size=page_size)
-        page_queryset = paginator.paginate_queryset(request=request,
-                                                    queryset=queryset)
-        page_serializer = serializer(page_queryset, many=True, context=context)
-        return paginator.get_paginated_response(data=page_serializer.data)
-
-    def get_page_response_without_status_code(self, request=None,
-                                              queryset=None, serializer=None,
-                                              replace_from_url=None,
-                                              replace_to_url=None,
-                                              page_size=None,
-                                              ordering='-created',
-                                              context=None):
-
-        try:
-            if context is None:
-                context = {}
-            paginator = CustomCursorPagination(request=request,
-                                               ordering=ordering,
-                                               page_size=page_size)
-            page_queryset = paginator.paginate_queryset(request=request,
-                                                        queryset=queryset)
-            page_serializer = serializer(page_queryset, many=True,
-                                         context=context)
-            res = paginator.get_paginated_response_without_status_code(
-                data=page_serializer.data,
-                replace_from_url=replace_from_url,
-                replace_to_url=replace_to_url
-            )
-        except Exception as e:
-            logger.error(e, exc_info=True)
-            res = dict(next="", previous="", results=[])
-        return res
-
-    def build_page_link(self, cursor, cursor_query_param='cursor'):
-        if cursor is None:
-            return ''
-
-        base_uri = self.request.build_absolute_uri()
-        return replace_query_param(base_uri, cursor_query_param, cursor)
