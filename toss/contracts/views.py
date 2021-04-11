@@ -1,18 +1,19 @@
-import copy
 import logging
 from rest_framework import viewsets
-from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
-from .serializers import ContractSerializer
-from config.mixins import CustomResponseMixin
+from django.core.exceptions import ObjectDoesNotExist
+
 from config.log import LOG
 from .models import Contract
+from config.mixins import CustomResponseMixin, CustomPaginatorMixin
+from .serializers import ContractSerializer
 
 logger = logging.getLogger(__name__)
 
 
 class ContractViewSet(viewsets.GenericViewSet,
-                      CustomResponseMixin):
+                      CustomResponseMixin,
+                      CustomPaginatorMixin):
     queryset = Contract.objects.all()
     serializer_class = ContractSerializer
     permission_classes = (AllowAny,)
@@ -36,10 +37,12 @@ class ContractViewSet(viewsets.GenericViewSet,
 
         LOG(request=request, event='CONTRACT_LIST')
 
-        cqs = Contract.objects.filter(
-            contractor=request.user.id
-        ).values_list('id', flat=True)
+        try:
+            cqs = Contract.objects.filter(
+                contractor=request.user.id)
 
-        serializer = ContractSerializer(cqs, many=True)
+            serializer = ContractSerializer(cqs, many=True)
 
-        return self.success(results=serializer.data)
+            return self.success(results=serializer.data)
+        except ObjectDoesNotExist:
+            return self.not_found()

@@ -1,12 +1,20 @@
 from rest_framework import serializers
-from . import models
+from rest_framework.serializers import ListSerializer
 
 
-class ContractSerializer(serializers.ModelSerializer):
+class ContractIdListSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+
+
+class ContractListSerializer(ListSerializer):
+
+    def to_representation(self, profile_list):
+        serialized_profile_list = ContractIdListSerializer(profile_list, many=True).data
+
+        return serialized_profile_list
+
+
+class ContractSerializer(serializers.Serializer):
 
     class Meta:
-        model = models.Contract
-        fields = (
-            'id',
-        )
-
+        list_serializer_class = ContractListSerializer

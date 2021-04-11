@@ -18,3 +18,4 @@ class TestContract(AuthAPITestCase):
 
         res = self.client.get(reverse("contract-list"))
         self.assertEqual(res.status_code, 200)
+        self.assertEqual(len(res.data.get('results')), 2)
