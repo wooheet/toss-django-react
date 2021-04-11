@@ -1,6 +1,7 @@
 import re
 from time import sleep
 from enum import Enum
+from django.utils import timezone
 
 
 def send_email(email_to: str, html_body: str) -> bool:
@@ -22,6 +23,10 @@ def email_verification(email):
     if match == None:
         print('Bad Syntax')
         raise ValueError('Bad Syntax')
+
+
+def two_hour_hence():
+    return timezone.now() + timezone.timedelta(days=2)
 
 
 class ChoiceEnum(Enum):

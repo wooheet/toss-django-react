@@ -8,7 +8,6 @@ from config.log import LOG
 from .models import Contract
 from config.mixins import CustomResponseMixin
 from .serializers import ContractSerializer, ContractCreateSerializer
-from django.utils import timezone
 
 logger = logging.getLogger(__name__)
 

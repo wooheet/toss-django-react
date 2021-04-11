@@ -3,6 +3,7 @@ from toss.conftest import AuthAPITestCase
 from .models import Contract
 from toss.users.models import User
 from django.utils import timezone
+from config.utils import two_hour_hence
 
 
 class TestContract(AuthAPITestCase):
@@ -13,7 +14,7 @@ class TestContract(AuthAPITestCase):
         for i in range(2):
             Contract.objects.create(
                 contractor=user, term_of_contract=Contract.Article.FIRST,
-                term=timezone.now()
+                start_term=timezone.now(), end_term=two_hour_hence()
             )
 
         res = self.client.get(reverse("contract-list"))
