@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import FacebookLogin from "react-facebook-login";
 import formStyles from "shared/formStyles.module.scss";
 
 const LoginForm = (props, context) => (
@@ -15,12 +14,12 @@ const LoginForm = (props, context) => (
         value={props.usernameValue}
       />
       <input
-        type="password"
+        type="email"
         placeholder={context.t("계약 대상 이메일")}
         className={formStyles.textInput}
         onChange={props.handleInputChange}
-        name="password"
-        value={props.passwordValue}
+        name="email"
+        value={props.emailValue}
       />
     </form>
     <span className={formStyles.divider}>{context.t("o")}</span>
@@ -35,9 +34,8 @@ const LoginForm = (props, context) => (
 LoginForm.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
   usernameValue: PropTypes.string.isRequired,
-  passwordValue: PropTypes.string.isRequired,
+  emailValue: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  handleFacebookLogin: PropTypes.func.isRequired
 };
 
 LoginForm.contextTypes = {

@@ -1,14 +1,7 @@
 
-// import
-
 // actions
 
 const SAVE_TOKEN = "SAVE_TOKEN";
-const LOGOUT = "LOGOUT";
-const SET_USER_LIST = "SET_USER_LIST";
-const FOLLOW_USER = "FOLLOW_USER";
-const UNFOLLOW_USER = "UNFOLLOW_USER";
-const SET_IMAGE_LIST = "SET_IMAGE_LIST";
 
 // action creators
 
@@ -19,73 +12,18 @@ function saveToken(token) {
   };
 }
 
-function logout() {
-  return {
-    type: LOGOUT
-  };
-}
-
-function setFollowUser(userId) {
-  return {
-    type: FOLLOW_USER,
-    userId
-  };
-}
-
-function setUnfollowUser(userId) {
-  return {
-    type: UNFOLLOW_USER,
-    userId
-  };
-}
-
-function setUserList(userList) {
-  return {
-    type: SET_USER_LIST,
-    userList
-  };
-}
-
-function setImageList(imageList) {
-  return {
-    type: SET_IMAGE_LIST,
-    imageList
-  };
-}
-
 // API actions
 
-function facebookLogin(access_token) {
+function usernameLogin(username, email) {
   return function(dispatch) {
-    fetch("/users/login/facebook/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        access_token
-      })
-    })
-      .then(response => response.json())
-      .then(json => {
-        if (json.token) {
-          dispatch(saveToken(json.token));
-        }
-      })
-      .catch(err => console.log(err));
-  };
-}
-
-function usernameLogin(username, password) {
-  return function(dispatch) {
-    fetch("/rest-auth/login/", {
+    fetch("/contracts/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
         username,
-        password
+        email
       })
     })
       .then(response => response.json())
@@ -154,7 +92,6 @@ function applySetToken(state, action) {
 // exports
 
 const actionCreators = {
-  facebookLogin,
   usernameLogin,
   createAccount
 };

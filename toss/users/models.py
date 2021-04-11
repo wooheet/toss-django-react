@@ -16,9 +16,9 @@ class User(AbstractUser):
     @classmethod
     def signup(cls, params):
         email = params.get('email', '')
-        username = params.get('username', email.split('@')[0])
-
         # email_verification(email)
+
+        username = params.get('username', email.split('@')[0])
 
         try:
             with transaction.atomic():

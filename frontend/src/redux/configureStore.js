@@ -3,7 +3,7 @@ import { combineReducers, createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { createBrowserHistory } from "history";
 import thunk from "redux-thunk";
-import user from "redux/modules/user";
+import user from "redux/modules/contract";
 import { i18nState } from "redux-i18n";
 
 const env = process.env.NODE_ENV;

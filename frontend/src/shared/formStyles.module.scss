@@ -63,21 +63,6 @@
         opacity: 0.8;
       }
     }
-    .facebookLink {
-      display: flex;
-      align-items: center;
-      color: #385185;
-      justify-content: center;
-      margin-bottom: 25px;
-      cursor: pointer;
-      svg {
-        margin-right: 5px;
-      }
-    }
-    .forgotLink {
-      font-size: $small-font-size;
-      color: $dark-blue;
-    }
     .signupHeader {
       font-size: 17px;
       color: $dark-grey;

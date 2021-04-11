@@ -8,15 +8,6 @@ const SignupForm = (props, context) => (
     <h3 className={formStyles.signupHeader}>
       {context.t("Sign up to see photos and videos from your friends.")}
     </h3>
-    <FacebookLogin
-      appId="1718196768212364"
-      autoLoad={false}
-      fields="name,email,picture"
-      callback={props.handleFacebookLogin}
-      cssClass={formStyles.button}
-      icon="fa-facebook-official"
-      textButton={context.t("Log in with Facebook")}
-    />
     <span className={formStyles.divider}>or</span>
     <form className={formStyles.form} onSubmit={props.handleSubmit}>
       <input
@@ -72,7 +63,6 @@ SignupForm.propTypes = {
   passwordValue: PropTypes.string.isRequired,
   handleInputChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  handleFacebookLogin: PropTypes.func.isRequired
 };
 
 SignupForm.contextTypes = {
