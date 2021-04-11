@@ -22,9 +22,9 @@ DEBUG = env.bool("DJANGO_DEBUG", False)
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # though not all of them may be available with every OS.
 # In Windows, this must be set to your system time zone.
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Seoul"
 # https://docs.djangoproject.com/en/dev/ref/settings/#language-code
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ko-kr"
 # https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-i18n
@@ -39,7 +39,7 @@ LOCALE_PATHS = [str(ROOT_DIR.path('.locale'))]
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-DATABASES = {"default": env.db("DATABASE_URL", default='postgres:///teddytoss')}
+DATABASES = {"default": env.db("DATABASE_URL", default='postgres:///tosscore')}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # URLS
@@ -71,6 +71,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "toss.users.apps.UsersConfig",
+    "toss.contracts.apps.ContractsConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -172,7 +173,6 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
-                "toss.utils.context_processors.settings_context",
             ],
         },
     }
@@ -215,7 +215,7 @@ EMAIL_TIMEOUT = 5
 # Django Admin URL.
 ADMIN_URL = "admin/"
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
-ADMINS = [("""Teddy""", "teddy@toss.io")]
+ADMINS = [("""Teddy""", "teddy@toss.im")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
 
@@ -249,16 +249,6 @@ LOGGING = {
 ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_AUTHENTICATION_METHOD = "username"
-# https://django-allauth.readthedocs.io/en/latest/configuration.html
-# ACCOUNT_EMAIL_REQUIRED = True
-# https://django-allauth.readthedocs.io/en/latest/configuration.html
-# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-# https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_ADAPTER = "toss.users.adapters.AccountAdapter"
-# https://django-allauth.readthedocs.io/en/latest/configuration.html
-SOCIALACCOUNT_ADAPTER = "toss.users.adapters.SocialAccountAdapter"
-
-
 # ------------------------------------------------------------------------------
 
 TAGGIT_CASE_INSENSITIVE = True
@@ -274,7 +264,6 @@ REST_FRAMEWORK = {
 
 REST_USE_JWT = True
 ACCOUNT_LOGOUT_ON_GET = True
-SOCIALACCOUNT_QUERY_EMAIL = True
 
 ACTION_LOGGER_NAME = 'action'
 

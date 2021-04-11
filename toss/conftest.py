@@ -1,9 +1,11 @@
 import pytest
 from django.urls import reverse
+from django.utils import timezone
 from rest_framework.test import APIClient, APITestCase
 from toss.users.models import User
 from toss.users.tests.factories import UserFactory
 from rest_framework_jwt.settings import api_settings
+from toss.contracts.models import Contract
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
@@ -44,6 +46,11 @@ class AuthAPITestCase(APITestCase):
         client.credentials(HTTP_AUTHORIZATION='JWT {0}'.format(token))
 
         sign_user = User.objects.get(pk=self.user_id)
+
+        Contract.objects.create(
+            contractor=sign_user, term_of_contract=Contract.Article.FIRST,
+            term=timezone.now()
+        )
 
         return client_data, client
 

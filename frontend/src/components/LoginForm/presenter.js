@@ -8,7 +8,7 @@ const LoginForm = (props, context) => (
     <form className={formStyles.form} onSubmit={props.handleSubmit}>
       <input
         type="text"
-        placeholder={context.t("Username")}
+        placeholder={context.t("계약 대상")}
         className={formStyles.textInput}
         onChange={props.handleInputChange}
         name="username"
@@ -16,31 +16,19 @@ const LoginForm = (props, context) => (
       />
       <input
         type="password"
-        placeholder={context.t("Password")}
+        placeholder={context.t("계약 대상 이메일")}
         className={formStyles.textInput}
         onChange={props.handleInputChange}
         name="password"
         value={props.passwordValue}
       />
-      <input
+    </form>
+    <span className={formStyles.divider}>{context.t("o")}</span>
+    <input
         type="submit"
-        value={context.t("Log in")}
+        value={context.t("계약 조항 추가")}
         className={formStyles.button}
       />
-    </form>
-    <span className={formStyles.divider}>{context.t("or")}</span>
-    <FacebookLogin
-      appId="1718196768212364"
-      autoLoad={false}
-      fields="name,email,picture"
-      callback={props.handleFacebookLogin}
-      cssClass={formStyles.facebookLink}
-      icon="fa-facebook-official"
-      textButton={context.t("Log in with Facebook")}
-    />
-    <span className={formStyles.forgotLink}>
-      {context.t("Forgot password?")}
-    </span>
   </div>
 );
 
