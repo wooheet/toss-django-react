@@ -14,10 +14,7 @@ jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     path(r"api-token-auth/", obtain_jwt_token, name="token"),
-    path(r"users/", include("toss.users.urls", namespace="users")),
-    # path(r"users/", include("toss.users.urls")),
-    path(r"images/", include('toss.images.urls')),
-    path(r"notifications/", include('toss.notifications.urls')),
+    path(r"users/", include("toss.users.urls")),
     path(r"rest-auth/", include('rest_auth.urls')),
     path(r"rest-auth/registration/", include('rest_auth.registration.urls')),
     path(r"accounts/", include("allauth.urls")),
