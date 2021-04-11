@@ -30,7 +30,11 @@ class ListUserSerializer(serializers.ModelSerializer):
 class MyProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
-        fields ='__all__'
+        fields = (
+            'id',
+            'username',
+            'name'
+        )
 
 
 class UserSerializer(serializers.ModelSerializer):

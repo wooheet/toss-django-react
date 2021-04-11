@@ -15,6 +15,7 @@ urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     path(r"api-token-auth/", obtain_jwt_token, name="token"),
     path(r"users/", include("toss.users.urls")),
+    path(r"contracts/", include("toss.contracts.urls")),
     path(r"rest-auth/", include('rest_auth.urls')),
     path(r"rest-auth/registration/", include('rest_auth.registration.urls')),
     path(r"accounts/", include("allauth.urls")),

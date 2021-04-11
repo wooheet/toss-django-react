@@ -2,8 +2,7 @@ import copy
 import logging
 from rest_framework import viewsets
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from . import models, serializers
+from rest_framework.permissions import AllowAny
 from config.mixins import CustomResponseMixin
 from .serializers import MyProfileSerializer, UserSerializer
 from config.log import LOG
@@ -14,8 +13,8 @@ logger = logging.getLogger(__name__)
 
 class UserViewSet(viewsets.ModelViewSet,
                   CustomResponseMixin):
-    queryset = models.User.objects.all()
-    serializer_class = serializers.UserSerializer
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
     permission_classes = (AllowAny,)
 
     def create(self, request, *args, **kwargs):
@@ -38,7 +37,7 @@ class UserViewSet(viewsets.ModelViewSet,
         try:
             data_copy = copy.deepcopy(request.data)
 
-            LOG(request=request, event='USER_NEW_SIGN',
+            LOG(request=request, event='USER_NEW_SIGN_UP',
                 data=dict(extra=data_copy))
 
             signup_user = User.signup(data_copy)
@@ -78,6 +77,3 @@ class UserViewSet(viewsets.ModelViewSet,
         )
 
         return self.success(results=serializer.data)
-
-
-    # TODO 내가 가진 컨트랙트 리스트
