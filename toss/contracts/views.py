@@ -21,7 +21,7 @@ class ContractViewSet(viewsets.GenericViewSet,
 
     def create(self, request, *args, **kwargs):
         """
-            계약서 생
+            Create contract
          ---
          responseMessages:
              -   code:   200

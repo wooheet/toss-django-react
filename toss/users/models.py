@@ -17,7 +17,6 @@ class User(AbstractUser):
     def signup(cls, params):
         email = params.get('email', '')
         # email_verification(email)
-
         username = params.get('username', email.split('@')[0])
 
         try:
@@ -29,5 +28,4 @@ class User(AbstractUser):
             raise ValidationError('User data is invalid.')
         except IntegrityError:
             signup_user = cls.objects.get(username=username)
-
         return signup_user

@@ -28,32 +28,9 @@ function usernameLogin(username, email) {
     })
       .then(response => response.json())
       .then(json => {
-        if (json.token) {
-          dispatch(saveToken(json.token));
-        }
-      })
-      .catch(err => console.log(err));
-  };
-}
-
-function createAccount(username, password, email) {
-  return function(dispatch) {
-    fetch("/rest-auth/registration/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        username,
-        password1: password,
-        password2: password,
-        email
-      })
-    })
-      .then(response => response.json())
-      .then(json => {
-        if (json.token) {
-          dispatch(saveToken(json.token));
+        console.log(json)
+        if (json.status_code === 200) {
+          dispatch(saveToken(json.status_code));
         }
       })
       .catch(err => console.log(err));
@@ -92,8 +69,7 @@ function applySetToken(state, action) {
 // exports
 
 const actionCreators = {
-  usernameLogin,
-  createAccount
+  usernameLogin
 };
 
 export { actionCreators };

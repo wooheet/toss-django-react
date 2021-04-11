@@ -51,19 +51,6 @@ class AuthAPITestCase(APITestCase):
         self.user, self.client = self.signup_user(**kwargs)
         self.no_signup_client = APIClient()
 
-    def many_signup(self, count):
-        signup_list = list(
-            map(
-                lambda x: self.signup_user(nickname=f"user{x}"), range(0, count)
-            )
-        )
-        user_list = []
-        client_list = []
-        for u, c in signup_list:
-            user_list.append(u)
-            client_list.append(c)
-        return user_list, client_list
-
     def get_user(self):
         return User.objects.get(id=self.user["id"])
 

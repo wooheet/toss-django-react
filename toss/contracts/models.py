@@ -4,6 +4,7 @@ from django.db import models, transaction, IntegrityError
 from django.core.exceptions import ValidationError
 from config.utils import send_email
 
+
 class Contract(models.Model):
     class Article(ChoiceEnum):
         FIRST = '이용허락'
@@ -25,15 +26,15 @@ class Contract(models.Model):
         try:
             with transaction.atomic():
                 contract = cls.objects.create(
-                    contractor=user, term_of_contract=Contract.Article.FIRST,
+                    contractor=user, term_of_contract=str(Contract.Article.FIRST),
                     term=timezone.now()
                 )
         except ValidationError:
             raise ValidationError('User data is invalid.')
         except IntegrityError:
-            #TODO 중복 체크
+            # TODO 중복 체크
             pass
 
-        send_email(user.email, 'body')
+        # send_email(user.email, 'body')
 
         return contract

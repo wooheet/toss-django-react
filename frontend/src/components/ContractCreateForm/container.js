@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import LoginForm from "./presenter";
+import ContractCreateForm from "./presenter";
 
 class Container extends Component {
   state = {
@@ -13,11 +13,12 @@ class Container extends Component {
   render() {
     const { username, email } = this.state;
     return (
-      <LoginForm
+      <ContractCreateForm
         handleInputChange={this._handleInputChange}
         handleSubmit={this._handleSubmit}
         usernameValue={username}
         emailValue={email}
+        changeAction={this._changeAction}
       />
     );
   }
@@ -32,6 +33,20 @@ class Container extends Component {
     const { username, email } = this.state;
     event.preventDefault();
     usernameLogin(username, email);
+  };
+  _changeAction = () => {
+      this.setState(prevState => {
+          const { action } = prevState;
+          if(action === "contract"){
+              return {
+                  action: "confirm"
+              };
+          } else if(action === "confirm"){
+              return {
+                  action: "contract"
+              };
+          }
+      });
   };
 }
 

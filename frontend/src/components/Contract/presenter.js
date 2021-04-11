@@ -1,30 +1,29 @@
 import React from 'react';
 import styles from "./styles.module.scss";
-import LoginForm from "components/LoginForm";
-import SignupForm from "components/SignupForm";
+import ContractCreateForm from "components/ContractCreateForm";
+import ContractConfirmForm from "components/ContractConfirmForm";
 
-const Auth = (props, context) => (
+const Contract = (props, context) => (
     <main className={styles.auth}>
 
         <div className={styles.column}>
             <div className={`${styles.whiteBox} ${styles.formBox}`}>
                 <img src="https://static.toss.im/tds/icon/svg/logo.svg" alt="logo" width={95}/>
-                {props.action === "login" && <LoginForm />}
-                {props.action === "signup" && <SignupForm />}
+                {props.action === "contract" && <ContractCreateForm />}
+                {props.action === "confirm" && <ContractConfirmForm />}
             </div>
             <div className={styles.whiteBox}>
-                {props.action === "login" && (
+                {props.action === "contract" && (
                     <p className={styles.text}>
                         <span className={styles.changeLink} onClick={props.changeAction}>
-                            생성하기
+                            조회
                         </span>
                     </p>
                 )}
-                {props.action === "signup" &&(
+                {props.action === "confirm" &&(
                     <p className={styles.text}>
-                        Have an account?{" "}
                         <span className={styles.changeLink} onClick={props.changeAction}>
-                            Log in
+                            생성하기
                         </span>
                     </p>
                 )}
@@ -33,4 +32,4 @@ const Auth = (props, context) => (
     </main>
 );
 
-export default Auth;
+export default Contract;

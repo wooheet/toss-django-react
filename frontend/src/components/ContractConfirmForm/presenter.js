@@ -1,62 +1,85 @@
 import React from "react";
 import PropTypes from "prop-types";
-import FacebookLogin from "react-facebook-login";
 import formStyles from "shared/formStyles.module.scss";
 
-const SignupForm = (props, context) => (
+const ContractConfirmForm = (props, context) => (
   <div className={formStyles.formComponent}>
     <h3 className={formStyles.signupHeader}>
-      {context.t("Sign up to see photos and videos from your friends.")}
+      {context.t("Confirm Contract")}
     </h3>
-    <span className={formStyles.divider}>or</span>
+    <span className={formStyles.divider}>o</span>
     <form className={formStyles.form} onSubmit={props.handleSubmit}>
+        <p className={formStyles.terms}>
+          {context.t("Contract ID")}
+        </p>
       <input
         type="email"
-        placeholder={context.t("Email")}
+        placeholder={context.t("Contract ID")}
         className={formStyles.textInput}
         value={props.emailValue}
         onChange={props.handleInputChange}
         name="email"
       />
+      <p className={formStyles.terms}>
+          {context.t("Contractor")}
+      </p>
       <input
         type="text"
-        placeholder={context.t("Full Name")}
+        placeholder={context.t("Contractor")}
         className={formStyles.textInput}
         value={props.fullNameValue}
         onChange={props.handleInputChange}
         name="fullName"
       />
+      <p className={formStyles.terms}>
+          {context.t("Email")}
+      </p>
       <input
-        type="username"
-        placeholder={context.t("Username")}
+        type="text"
+        placeholder={context.t("Email")}
         className={formStyles.textInput}
         value={props.usernameValue}
         onChange={props.handleInputChange}
         name="username"
       />
+      <p className={formStyles.terms}>
+          {context.t("Term")}
+      </p>
       <input
-        type="password"
-        placeholder={context.t("Password")}
+        type="text"
+        placeholder={context.t("Term")}
         className={formStyles.textInput}
         value={props.passwordValue}
         onChange={props.handleInputChange}
         name="password"
       />
+      <p className={formStyles.terms}>
+          {context.t("Article")}
+      </p>
       <input
-        type="submit"
-        value={context.t("Sign up")}
-        className={formStyles.button}
+        type="text"
+        placeholder={context.t("Article")}
+        className={formStyles.textInput}
+        value={props.passwordValue}
         onChange={props.handleInputChange}
+        name="password"
+      />
+      <p className={formStyles.terms}>
+          {context.t("Associate Contract")}
+      </p>
+      <input
+        type="text"
+        placeholder={context.t("Associate Contract")}
+        className={formStyles.textInput}
+        value={props.passwordValue}
+        onChange={props.handleInputChange}
+        name="password"
       />
     </form>
-    <p className={formStyles.terms}>
-      {context.t("By signing up, you agree to our ")}
-      <span>{context.t("Terms & Privacy Policy")}</span>.
-    </p>
   </div>
 );
 
-SignupForm.propTypes = {
+ContractConfirmForm.propTypes = {
   emailValue: PropTypes.string.isRequired,
   fullNameValue: PropTypes.string.isRequired,
   usernameValue: PropTypes.string.isRequired,
@@ -65,8 +88,8 @@ SignupForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
 };
 
-SignupForm.contextTypes = {
+ContractConfirmForm.contextTypes = {
   t: PropTypes.func.isRequired
 };
 
-export default SignupForm;
+export default ContractConfirmForm;
