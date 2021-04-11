@@ -1,3 +1,3 @@
-# toss-django-react
+# toss-task
 
 

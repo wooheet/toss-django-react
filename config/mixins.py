@@ -1,8 +1,6 @@
 import logging
 from rest_framework.response import Response
-from rest_framework.utils.urls import replace_query_param
 from rest_framework.utils.serializer_helpers import ReturnList
-from .pagenation import CustomCursorPagination
 
 logger = logging.getLogger(__name__)
 
