@@ -18,7 +18,6 @@ class Container extends Component {
         handleSubmit={this._handleSubmit}
         usernameValue={username}
         emailValue={email}
-        changeAction={this._changeAction}
       />
     );
   }
@@ -33,20 +32,6 @@ class Container extends Component {
     const { username, email } = this.state;
     event.preventDefault();
     usernameLogin(username, email);
-  };
-  _changeAction = () => {
-      this.setState(prevState => {
-          const { action } = prevState;
-          if(action === "contract"){
-              return {
-                  action: "confirm"
-              };
-          } else if(action === "confirm"){
-              return {
-                  action: "contract"
-              };
-          }
-      });
   };
 }
 

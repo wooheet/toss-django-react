@@ -12,22 +12,16 @@ const Contract = (props, context) => (
                 {props.action === "contract" && <ContractCreateForm />}
                 {props.action === "confirm" && <ContractConfirmForm />}
             </div>
-            <div className={styles.whiteBox}>
-                {props.action === "contract" && (
-                    <p className={styles.text}>
-                        <span className={styles.changeLink} onClick={props.changeAction}>
-                            조회
-                        </span>
-                    </p>
-                )}
-                {props.action === "confirm" &&(
+            {props.action === "confirm" &&(
+                <div className={styles.whiteBox}>
                     <p className={styles.text}>
                         <span className={styles.changeLink} onClick={props.changeAction}>
                             생성하기
                         </span>
                     </p>
-                )}
-            </div>
+                </div>
+            )}
+
         </div>
     </main>
 );

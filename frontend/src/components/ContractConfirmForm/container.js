@@ -10,13 +10,15 @@ class Container extends Component {
     password: ""
   };
   render() {
-    const { email, fullName, username, password } = this.state;
+    const { contractId, contractor, email, term, article, associate } = this.state;
     return (
       <ContractConfirmForm
+        contractIdValue={contractId}
+        contractorValue={contractor}
         emailValue={email}
-        fullNameValue={fullName}
-        usernameValue={username}
-        passwordValue={password}
+        termValue={term}
+        articleValue={article}
+        associateValue={associate}
         handleInputChange={this._handleInputChange}
       />
     );

@@ -13,12 +13,12 @@ const ContractConfirmForm = (props, context) => (
           {context.t("Contract ID")}
         </p>
       <input
-        type="email"
+        type="text"
         placeholder={context.t("Contract ID")}
         className={formStyles.textInput}
         value={props.emailValue}
         onChange={props.handleInputChange}
-        name="email"
+        name="contractId"
       />
       <p className={formStyles.terms}>
           {context.t("Contractor")}
@@ -29,18 +29,18 @@ const ContractConfirmForm = (props, context) => (
         className={formStyles.textInput}
         value={props.fullNameValue}
         onChange={props.handleInputChange}
-        name="fullName"
+        name="contractor"
       />
       <p className={formStyles.terms}>
           {context.t("Email")}
       </p>
       <input
-        type="text"
+        type="email"
         placeholder={context.t("Email")}
         className={formStyles.textInput}
         value={props.usernameValue}
         onChange={props.handleInputChange}
-        name="username"
+        name="email"
       />
       <p className={formStyles.terms}>
           {context.t("Term")}
@@ -51,7 +51,7 @@ const ContractConfirmForm = (props, context) => (
         className={formStyles.textInput}
         value={props.passwordValue}
         onChange={props.handleInputChange}
-        name="password"
+        name="term"
       />
       <p className={formStyles.terms}>
           {context.t("Article")}
@@ -62,7 +62,7 @@ const ContractConfirmForm = (props, context) => (
         className={formStyles.textInput}
         value={props.passwordValue}
         onChange={props.handleInputChange}
-        name="password"
+        name="article"
       />
       <p className={formStyles.terms}>
           {context.t("Associate Contract")}
@@ -73,17 +73,19 @@ const ContractConfirmForm = (props, context) => (
         className={formStyles.textInput}
         value={props.passwordValue}
         onChange={props.handleInputChange}
-        name="password"
+        name="associate"
       />
     </form>
   </div>
 );
 
 ContractConfirmForm.propTypes = {
+  contractIdValue: PropTypes.string.isRequired,
+  contractorValue: PropTypes.string.isRequired,
   emailValue: PropTypes.string.isRequired,
-  fullNameValue: PropTypes.string.isRequired,
-  usernameValue: PropTypes.string.isRequired,
-  passwordValue: PropTypes.string.isRequired,
+  termValue: PropTypes.string.isRequired,
+  articleValue: PropTypes.string.isRequired,
+  associateValue: PropTypes.string.isRequired,
   handleInputChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };

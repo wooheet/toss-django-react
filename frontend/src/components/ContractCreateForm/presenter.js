@@ -27,7 +27,7 @@ const ContractCreateForm = (props, context) => (
       />
       <input
         type="submit"
-        value={context.t("계약 조항 추가")}
+        value={context.t("Create")}
         className={formStyles.button}
         onChange={props.handleInputChange}
         onClick={props.changeAction}
